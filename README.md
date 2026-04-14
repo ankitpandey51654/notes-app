@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📝 Notes App (Next.js + MongoDB)
 
-## Getting Started
+## 🚀 Overview
 
-First, run the development server:
+This is a full-stack Notes App built using Next.js and MongoDB.
+Users can create and manage notes with a simple UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🛠️ Tech Stack
+
+- Next.js (App Router)
+- MongoDB Atlas
+- Mongoose
+- Tailwind CSS
+
+---
+
+## ✨ Features
+
+- Create Notes
+- Fetch Notes
+- API Routes using Next.js
+- MongoDB Integration
+
+---
+
+## ⚙️ Setup Instructions
+
+1. Clone the repository:
+
+```
+git clone <your-repo-link>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Add environment variables:
 
-## Learn More
+```
+MONGODB_URL=your_mongodb_connection_string
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run the project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧠 Learning & Challenges
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+While building this project, I faced and solved several issues:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Fixed MongoDB connection error (ECONNREFUSED)
+- Resolved DNS issue with SRV connection string
+- Used non-SRV connection for stability
+- Fixed async/await bug in Mongoose
+- Solved hydration mismatch issue
+- Debugged Next.js caching issue
+
+---
+
+## 📌 Future Improvements
+
+- Update Note
+- Delete Note
+- Better UI design
+- Authentication system
+
+---
+
+## 👨‍💻 Author
+
+Ankit Pandey
