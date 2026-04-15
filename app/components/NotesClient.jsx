@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
-const NotesClient = () => {
+const NotesClient = ({ inititalNotes }) => {
+  const [notes, setNotes] = useState(inititalNotes);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,15 +23,34 @@ const NotesClient = () => {
       });
 
       const result = await response.json();
-      console.log("RESULT:", result);
-      console.log("RAW RESPONSE:", response);
-      if (result.data) {
-        console.log("TITLE:", result.data.title);
+
+      if (result.success) {
+        setNotes([result.data, ...notes]);
+        toast.success("Notes Created Successfully");
+        setTitle("");
+        setContent("");
       }
 
       setLoading(false);
     } catch (error) {
       console.error(error);
+      toast.error("Something Went Wrong");
+    }
+  };
+
+  const deleteNote = async (id) => {
+    try {
+      const response = await fetch(`/api/notes/${id}`, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (result.success) {
+        setNotes(notes.filter((note) => note._id !== id));
+        toast.success("Notes Delted Successfully");
+      }
+    } catch (error) {
+      console.error("Error deleting Note:", error);
+      toast.error("Something Went wrong");
     }
   };
   return (
@@ -64,6 +85,45 @@ const NotesClient = () => {
           </button>
         </div>
       </form>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold"> your notes ({notes.length})</h2>
+        {notes.length === 0 ? (
+          <p className="text-gray-500">
+            {" "}
+            No Notes Yet. create your First Note Above
+          </p>
+        ) : (
+          notes.map((note) => (
+            <div key={note._id} className="bg-white p-6 rounded-lg shadow-md">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-lg font-semibold">{note.title}</h3>
+                <div className="flex gap-2">
+                  <button className="text-blue-500 hover:text-blue-700 text-sm">
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteNote(note._id)}
+                    className="text-red-500 hover:text-red-700 text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <p className="text-gray-700 mb-2">{note.content}</p>
+              <p className="text-sm text-gray-500">
+                Created: {new Date(note.createdAt).toLocaleDateString("en-US")}
+              </p>
+              {note.updatedAt !== note.createdAt && (
+                <p className="text-sm text-gray-500">
+                  updated:{" "}
+                  {new Date(note.updatedAt).toLocaleDateString("en-US")}
+                </p>
+              )}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@
 ## 🚀 Overview
 
 This is a full-stack Notes App built using Next.js and MongoDB.
-Users can create and manage notes with a simple UI.
+Users can create, view, and delete notes with a simple UI.
 
 ---
 
@@ -20,7 +20,8 @@ Users can create and manage notes with a simple UI.
 
 - Create Notes
 - Fetch Notes
-- API Routes using Next.js
+- Delete Notes
+- REST API using Next.js
 - MongoDB Integration
 
 ---
@@ -63,15 +64,16 @@ While building this project, I faced and solved several issues:
 - Fixed async/await bug in Mongoose
 - Solved hydration mismatch issue
 - Debugged Next.js caching issue
+- Implemented DELETE API with dynamic routes
 
 ---
 
 ## 📌 Future Improvements
 
-- Update Note
-- Delete Note
-- Better UI design
-- Authentication system
+- Update Notes
+- Improve UI/UX
+- Add authentication (login/signup)
+- Add real-time updates
 
 ---
 
