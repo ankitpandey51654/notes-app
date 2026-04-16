@@ -9,25 +9,31 @@ This project demonstrates full CRUD operations, API handling, and database integ
 
 ---
 
+## 🌐 Live Demo
+
+👉 https://notes-app-six-pi-43.vercel.app/
+
+---
+
 ## 🛠️ Tech Stack
 
-- Next.js (App Router)
-- MongoDB Atlas
-- Mongoose
-- Tailwind CSS
-- React Hot Toast (for notifications)
+* Next.js (App Router)
+* MongoDB Atlas
+* Mongoose
+* Tailwind CSS
+* React Hot Toast (for notifications)
 
 ---
 
 ## ✨ Features
 
-- ✅ Create Notes
-- 📖 Fetch & Display Notes
-- ✏️ Edit / Update Notes (Inline Editing)
-- 🗑️ Delete Notes
-- 🔔 Toast Notifications for actions
-- ⚡ REST API using Next.js Route Handlers
-- 🌐 MongoDB Integration
+* ✅ Create Notes
+* 📖 Fetch & Display Notes
+* ✏️ Edit / Update Notes (Inline Editing)
+* 🗑️ Delete Notes
+* 🔔 Toast Notifications for actions
+* ⚡ REST API using Next.js Route Handlers
+* 🌐 MongoDB Integration
 
 ---
 
@@ -63,25 +69,25 @@ npm run dev
 
 While building this project, I tackled several real-world issues:
 
-- Fixed MongoDB connection error (ECONNREFUSED)
-- Resolved DNS issue with SRV connection string
-- Used non-SRV connection for better stability
-- Fixed async/await issues in Mongoose queries
-- Solved hydration mismatch in Next.js
-- Debugged caching issues in API routes
-- Implemented dynamic API routes (DELETE & UPDATE)
-- Managed complex state for inline editing (edit mode)
+* Fixed MongoDB connection error (ECONNREFUSED)
+* Resolved DNS issue with SRV connection string
+* Used non-SRV connection for better stability
+* Fixed async/await issues in Mongoose queries
+* Solved hydration mismatch in Next.js
+* Debugged caching issues in API routes
+* Implemented dynamic API routes (DELETE & UPDATE)
+* Managed complex state for inline editing (edit mode)
 
 ---
 
 ## 📌 Future Improvements
 
-- 🔐 Add Authentication (Login / Signup)
-- 📊 Convert into Dashboard UI
-- 🔍 Search & Filter Notes
-- 🌙 Dark Mode
-- ⚡ Real-time updates (WebSockets / polling)
-- 📱 Make fully mobile responsive
+* 🔐 Add Authentication (Login / Signup)
+* 📊 Convert into Dashboard UI
+* 🔍 Search & Filter Notes
+* 🌙 Dark Mode
+* ⚡ Real-time updates (WebSockets / polling)
+* 📱 Make fully mobile responsive
 
 ---
 
