@@ -4,6 +4,7 @@ This documentation serves as a **step-by-step master reference** for how this fu
 
 ---
 
+<<<<<<< HEAD
 ## 🏗️ 1. Project Architecture & Setup
 
 ### **Tech Stack**
@@ -21,11 +22,27 @@ This documentation serves as a **step-by-step master reference** for how this fu
    MONGODB_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/YourDBName
    ```
 4. Run development server: `npm run dev`
+=======
+## 🌐 Live Demo
+
+👉 https://notes-app-six-pi-43.vercel.app/
+
+---
+
+## 🛠️ Tech Stack
+
+* Next.js (App Router)
+* MongoDB Atlas
+* Mongoose
+* Tailwind CSS
+* React Hot Toast (for notifications)
+>>>>>>> 1585872658c9127088811a8c000925280f26f00c
 
 ---
 
 ## 📂 2. Folder Structure Overview
 
+<<<<<<< HEAD
 ```bash
 📦 noteapp
  ┣ 📂 app
@@ -44,6 +61,42 @@ This documentation serves as a **step-by-step master reference** for how this fu
  ┃ ┗ 📜 Note.js              # Mongoose Schema
  ┣ 📜 .env                   # Environment Variables
  ┗ 📜 package.json           # Dependencies
+=======
+* ✅ Create Notes
+* 📖 Fetch & Display Notes
+* ✏️ Edit / Update Notes (Inline Editing)
+* 🗑️ Delete Notes
+* 🔔 Toast Notifications for actions
+* ⚡ REST API using Next.js Route Handlers
+* 🌐 MongoDB Integration
+
+---
+
+## ⚙️ Setup Instructions
+
+1. Clone the repository:
+
+```
+git clone <your-repo-link>
+```
+
+2. Install dependencies:
+
+```
+npm install
+```
+
+3. Add environment variables:
+
+```
+MONGODB_URL=your_mongodb_connection_string
+```
+
+4. Run the project:
+
+```
+npm run dev
+>>>>>>> 1585872658c9127088811a8c000925280f26f00c
 ```
 
 ---
@@ -52,6 +105,7 @@ This documentation serves as a **step-by-step master reference** for how this fu
 
 To talk to MongoDB from Next.js, we need a singleton database connection and a Mongoose model.
 
+<<<<<<< HEAD
 ### `lib/db.js` (The Connection)
 Next.js API routes are serverless, meaning they can start and stop frequently. We use a cached connection to prevent creating too many database connections.
 ```javascript
@@ -99,11 +153,22 @@ const NoteSchema = new mongoose.Schema(
 
 export default mongoose.models.Note || mongoose.model("Note", NoteSchema);
 ```
+=======
+* Fixed MongoDB connection error (ECONNREFUSED)
+* Resolved DNS issue with SRV connection string
+* Used non-SRV connection for better stability
+* Fixed async/await issues in Mongoose queries
+* Solved hydration mismatch in Next.js
+* Debugged caching issues in API routes
+* Implemented dynamic API routes (DELETE & UPDATE)
+* Managed complex state for inline editing (edit mode)
+>>>>>>> 1585872658c9127088811a8c000925280f26f00c
 
 ---
 
 ## ⚙️ 4. The Backend: API Routes (App Router)
 
+<<<<<<< HEAD
 In Next.js App Router, APIs are created in the `app/api/` folder using `route.js` files. Each file exports functions named by their HTTP method (`GET`, `POST`, `PUT`, `DELETE`).
 
 ### Create Note (POST)
@@ -164,6 +229,14 @@ export async function DELETE(request, { params }) {
   }
 }
 ```
+=======
+* 🔐 Add Authentication (Login / Signup)
+* 📊 Convert into Dashboard UI
+* 🔍 Search & Filter Notes
+* 🌙 Dark Mode
+* ⚡ Real-time updates (WebSockets / polling)
+* 📱 Make fully mobile responsive
+>>>>>>> 1585872658c9127088811a8c000925280f26f00c
 
 ---
 
