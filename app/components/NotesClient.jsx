@@ -9,52 +9,45 @@ const NotesClient = ({ inititalNotes }) => {
   const [loading, setLoading] = useState(false);
 
   const [editingId, setEditingId] = useState(null);
-  const [editTitle, setEditTitle] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
   const createNote = async (e) => {
-    debugger;
     e.preventDefault();
-
     if (!title.trim() || !content.trim()) return;
 
     setLoading(true);
     try {
-      const response = await fetch("/api/notes", {
+      const res = await fetch("/api/notes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, content }),
       });
 
-      const result = await response.json();
-
+      const result = await res.json();
       if (result.success) {
         setNotes([result.data, ...notes]);
-        toast.success("Notes Created Successfully");
+        toast.success("Note created ✨");
         setTitle("");
         setContent("");
       }
-
+    } catch {
+      toast.error("Error creating note");
+    } finally {
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-      toast.error("Something Went Wrong");
     }
   };
 
   const deleteNote = async (id) => {
     try {
-      const response = await fetch(`/api/notes/${id}`, {
-        method: "DELETE",
-      });
-      const result = await response.json();
+      const res = await fetch(`/api/notes/${id}`, { method: "DELETE" });
+      const result = await res.json();
       if (result.success) {
-        setNotes(notes.filter((note) => note._id !== id));
-        toast.success("Notes Delted Successfully");
+        setNotes(notes.filter((n) => n._id !== id));
+        toast.success("Deleted 🗑️");
       }
-    } catch (error) {
-      console.error("Error deleting Note:", error);
-      toast.error("Something Went wrong");
+    } catch {
+      toast.error("Delete failed");
     }
   };
 
@@ -68,26 +61,22 @@ const NotesClient = ({ inititalNotes }) => {
     if (!editTitle.trim() || !editContent.trim()) return;
     setLoading(true);
     try {
-      const response = await fetch(`/api/notes/${id}`, {
+      const res = await fetch(`/api/notes/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: editTitle, content: editContent }),
       });
 
-      const result = await response.json();
-
+      const result = await res.json();
       if (result.success) {
-        toast.success("Notes Updated Successfully");
-        setNotes(notes.map((note) => (note._id === id ? result.data : note)));
-        setEditingId(null);
-        setEditTitle("");
-        setEditContent("");
+        setNotes(notes.map((n) => (n._id === id ? result.data : n)));
+        toast.success("Updated ✅");
+        cancelEdit();
       }
-
+    } catch {
+      toast.error("Update failed");
+    } finally {
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-      toast.error("Something Went Wrong");
     }
   };
 
@@ -96,119 +85,119 @@ const NotesClient = ({ inititalNotes }) => {
     setEditTitle("");
     setEditContent("");
   };
+
   return (
-    <div className="space-y-6">
-      <form onSubmit={createNote} className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">
-          Create New Note
+    <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
+      {/* Create Note */}
+      <form
+        onSubmit={createNote}
+        className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-2xl shadow-lg border"
+      >
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">
+          ✍️ Create Note
         </h2>
+
         <div className="space-y-4">
           <input
             type="text"
-            placeholder="Note Title"
+            placeholder="Title..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-            required
-          ></input>
+            className="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
+          />
 
           <textarea
-            placeholder="Note Content"
+            placeholder="Write something..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={4}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-          ></textarea>
+            className="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+
           <button
-            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 disabled:opacity-40"
-            type="Submit"
+            type="submit"
             disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
           >
-            {loading ? "creating...." : "Create Note"}
+            {loading ? "Creating..." : "Create Note"}
           </button>
         </div>
       </form>
 
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold"> your notes ({notes.length})</h2>
+      {/* Notes List */}
+      <div>
+        <h2 className="text-xl font-semibold mb-4">
+          📚 Your Notes ({notes.length})
+        </h2>
+
         {notes.length === 0 ? (
-          <p className="text-gray-500">
-            {" "}
-            No Notes Yet. create your First Note Above
-          </p>
+          <p className="text-gray-500">No notes yet.</p>
         ) : (
-          notes.map((note) => (
-            <div key={note._id} className="bg-white p-6 rounded-lg shadow-md">
-              {editingId === note._id ? (
-                <>
-                  <div className="space-y-4">
+          <div className="grid gap-4">
+            {notes.map((note) => (
+              <div
+                key={note._id}
+                className="bg-white p-5 rounded-2xl shadow-md hover:shadow-xl transition border"
+              >
+                {editingId === note._id ? (
+                  <div className="space-y-3">
                     <input
-                      type="text"
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    ></input>
+                      className="w-full p-2 border rounded-lg"
+                    />
+
                     <textarea
-                      placeholder="Note Content"
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      rows={4}
-                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                    ></textarea>
+                      className="w-full p-2 border rounded-lg"
+                    />
 
                     <div className="flex gap-2">
                       <button
                         onClick={() => updateNote(note._id)}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:opacity-40"
-                        disabled={loading}
+                        className="bg-green-500 text-white px-4 py-1 rounded-lg"
                       >
-                        {loading ? "Saving..." : "Save"}
+                        Save
                       </button>
                       <button
                         onClick={cancelEdit}
-                        className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 disabled:opacity-40"
-                        disabled={loading}
+                        className="bg-gray-400 text-white px-4 py-1 rounded-lg"
                       >
                         Cancel
                       </button>
                     </div>
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold">{note.title}</h3>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => startEdit(note)}
-                        className="text-blue-500 hover:text-blue-700 text-sm"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => deleteNote(note._id)}
-                        className="text-red-500 hover:text-red-700 text-sm"
-                      >
-                        Delete
-                      </button>
+                ) : (
+                  <>
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-semibold text-lg">{note.title}</h3>
+                      <div className="flex gap-3 text-sm">
+                        <button
+                          onClick={() => startEdit(note)}
+                          className="text-blue-500"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteNote(note._id)}
+                          className="text-red-500"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-gray-700 mb-2">{note.content}</p>
-                  <p className="text-sm text-gray-500">
-                    Created:{" "}
-                    {new Date(note.createdAt).toLocaleDateString("en-US")}
-                  </p>
-                  {note.updatedAt !== note.createdAt && (
-                    <p className="text-sm text-gray-500">
-                      updated:{" "}
-                      {new Date(note.updatedAt).toLocaleDateString("en-US")}
-                    </p>
-                  )}
-                </>
-              )}
-            </div>
-          ))
+
+                    <p className="text-gray-600 mb-3">{note.content}</p>
+
+                    <div className="text-xs text-gray-400" suppressHydrationWarning>
+                      {new Date(note.createdAt).toLocaleDateString()}
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
