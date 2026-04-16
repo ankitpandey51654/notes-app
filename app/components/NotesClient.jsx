@@ -160,7 +160,7 @@ const NotesClient = ({ inititalNotes }) => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => updateNote(note._id)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:opacity-40"
+                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:opacity-40"
                         disabled={loading}
                       >
                         {loading ? "Saving..." : "Save"}
